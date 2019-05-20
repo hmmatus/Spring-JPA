@@ -1,18 +1,22 @@
 package com.uca.capas.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(schema="public",name="student")
 public class Student {
 	
+	//Establecemos el parametro id, tambien la secuencia a la que hace referencia
 	@Id
+	@GeneratedValue(generator="student_id_student_seq",strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="student_id_student_seq",sequenceName="public.student_id_student_seq",allocationSize = 1)
 	@Column(name="id_student")
 	private Integer cStudent;
 	

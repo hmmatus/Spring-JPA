@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>    
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>   
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,20 @@
 <title>SpringJPA</title>
 </head>
 <body>
+	<form action="${pageContext.request.contextPath}/search" method = "post">
+	<label>Busqueda por codigo: </label><input type="number" placeholder="Ingrese codigo" name="code">
+	<input type="submit" value="Enviar">
+	</form>
+	
+	<form action="${pageContext.request.contextPath}/save" method = "post">
+	<input type="submit" value="Agregar un nuevo usuario">
+	</form>
+	
+	<form action="${pageContext.request.contextPath}/searchBy" method="post">
+	<input type="text" name="name" placeholder="Ingrese el nombre: ">
+	<input type="number" name="age" placeholder="Ingrese la edad: ">
+	<button type="submit">Buscar</button>
+	</form>
 
 	<table>
 		<tr>
