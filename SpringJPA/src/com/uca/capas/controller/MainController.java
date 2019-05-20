@@ -96,7 +96,9 @@ public class MainController {
 	@RequestMapping(value = "/searchBy",method = RequestMethod.POST)
 	public ModelAndView searchBy(@RequestParam(value = "name") String name,@RequestParam(value="age") Integer age) {
 		ModelAndView mav = new ModelAndView();
+		//Busco por nombre
 		List<Student> studentsNameList = studentRepo.findBySName(name);
+		//Busco por edad
 		List<Student> studentsAgeList = studentRepo.findBySAge(age);
 		mav.addObject("studentsname",studentsNameList);
 		mav.addObject("studentsage",studentsAgeList);
