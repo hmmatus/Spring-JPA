@@ -73,14 +73,29 @@ public class MainController {
 		return mav; 
 	}
 	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public ModelAndView update(@RequestParam(value="code") Integer code) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("student",studentDao.findOne(code));
+		mav.setViewName("form");
+		return mav; 
+	}
+	
 	@RequestMapping(value="/formData")
 	public ModelAndView save(@ModelAttribute Student s) {
 		ModelAndView mav = new ModelAndView();
 		List<Student> students = null;
+		log.info(s.getcStudent()+"");
 		try {
-		log.info("Agrego un nuevo usuario");
-		//Agrego el nuevo usuario, el 1 representa que es una nueva instancia
-		studentDao.save(s, 1);
+			if(s.getcStudent() == 1) {
+				log.info("Agrego un nuevo usuario. Codigo:");
+				//Agrego el nuevo usuario, el 1 representa que es una nueva instancia
+				studentDao.save(s, 1);	
+			}
+			else {
+				log.info("Actualizo el usuario");
+				studentDao.save(s,0);
+			}
 		}catch(Exception e){
 			log.info("Error:"+e.toString());
 		}

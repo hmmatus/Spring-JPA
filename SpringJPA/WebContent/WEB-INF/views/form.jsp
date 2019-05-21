@@ -10,15 +10,17 @@
 </head>
 <body>
 		<form:form  action="${pageContext.request.contextPath}/formData" method="POST" modelAttribute="student">
+		
+		<form:input type="hidden" name="code" path="cStudent" value="${student.cStudent}" />
 	
 		<label>Ingrese un nombre : </label>
-		<form:input type="text" name="name" path="sName"/><br>
+		<form:input type="text" name="name" path="sName" value="${student.sName}"/><br>
 		
 		<label>Ingrese un apellido : </label>
-		<form:input type="text" name="lname" path="lName"/><br>
+		<form:input type="text" name="lname" path="lName" value="${student.lName}"/><br>
 		
 		<label>Ingrese edad : </label>
-		<form:input type="number" name="age" path="sAge"/><br>
+		<form:input type="number" name="age" path="sAge" value="${student.sAge}"/><br>
 		
 		<Label>Estado del estudiante</Label><br>
 		<form:radiobutton name="status" path="bActivo" value="true"/><label>Activo</label><br>

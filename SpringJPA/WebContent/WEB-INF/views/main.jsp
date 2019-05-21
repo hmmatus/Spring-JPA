@@ -37,6 +37,12 @@
 					<td>${students.lName}</td>
 					<td>${students.sAge}</td>
 					<td>${students.activoDelegate}</td>
+					<td>
+					<form action="${pageContext.request.contextPath}/update" method="post">
+						<input type="hidden" value="${students.cStudent}" name="code">
+						<input type="submit">
+					</form>
+					</td>
 				</tr>	
 			</c:forEach>
 	</table>
