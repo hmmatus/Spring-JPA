@@ -99,9 +99,7 @@ public class MainController {
 	public ModelAndView insert() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("student",new Student());
-		mav.addObject("count",studentDao.findAll().size());
-		mav.setViewName("form");
-		return mav; 
+		return mav;
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
