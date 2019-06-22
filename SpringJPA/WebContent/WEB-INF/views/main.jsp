@@ -21,7 +21,7 @@
 	<form action="${pageContext.request.contextPath}/searchBy" method="post">
 	<input type="text" name="name" placeholder="Ingrese el nombre: ">
 	<input type="number" name="age" placeholder="Ingrese la edad: ">
-	<button type="submit">Buscar</button>
+	<input type="submit" value="Enviar">
 	</form>
 
 	<table>
@@ -40,7 +40,7 @@
 					<td>
 					<form action="${pageContext.request.contextPath}/update" method="post">
 						<input type="hidden" value="${students.cStudent}" name="code">
-						<input type="submit">
+						<input type="submit" value="Editar">
 					</form>
 					</td>
 				</tr>	

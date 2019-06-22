@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+		<h1>Numero de estudiantes actuales: </h1><p>${count}</p>
 		<form:form  action="${pageContext.request.contextPath}/formData" method="POST" modelAttribute="student">
 		
 		<form:input type="hidden" name="code" path="cStudent" value="${student.cStudent}" />

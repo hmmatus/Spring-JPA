@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uca.capas.dao.StudentDAO;
+import com.uca.capas.domain.Section;
 import com.uca.capas.domain.Student;
+import com.uca.capas.repositories.SectionRepository;
 import com.uca.capas.repositories.StudentRepository;
+import com.uca.capas.service.StudentService;
 
 /*import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;*/
@@ -34,18 +37,45 @@ public class MainController {
 	private StudentDAO studentDao;
 	
 	@Autowired
+	private StudentService sService;
+	
+	@Autowired
 	private StudentRepository studentRepo;
 	
+	@Autowired
+	private SectionRepository secRepo;
+	
 	//Controlador principal
-	@RequestMapping("/")
+	/*@RequestMapping("/")
 	public ModelAndView initMain(){
 		log.info("Entrando a funcion init-main " + log.getName());
 		ModelAndView mav = new ModelAndView();
 		List<Student> students = null;
 		try {
 		//Selecciono todos los elementos de la tabla student
-		 students = studentDao.findAll();
+		//cambie studentDao por la capa de servicio
+		 students = sService.findAll();
 		 log.info("Termino de buscar en la base de datos");
+		}
+		catch(Exception e){
+			log.log(Level.SEVERE,"Exception Occur",e);
+		}
+		mav.addObject("students",students);
+		mav.setViewName("main");
+		return mav;
+	}*/
+	
+	//Controlador principal implementando relacion entre tablas
+	@RequestMapping("/")
+	public ModelAndView initMain(){
+		log.info("Entrando a funcion init-main " + log.getName());
+		ModelAndView mav = new ModelAndView();
+		List<Student> students = null;
+		try {
+		//Selecciono todos los elementos de la tabla student que pertenece a la seccion #4
+		//cambie studentDao por SectionRepository
+		 students = secRepo.findAll().get(0).getStudents();
+		 log.info("Termino de buscar en la base de datos, elementos de la seccion:" + secRepo.findAll().get(0).getSecName());
 		}
 		catch(Exception e){
 			log.log(Level.SEVERE,"Exception Occur",e);
@@ -59,7 +89,7 @@ public class MainController {
 	@RequestMapping(value="/search",method = RequestMethod.POST)
 	@ResponseBody
 	public Student search(@RequestParam(value = "code") Integer code) {
-		Student student = studentDao.findOne(code);
+		Student student = sService.findOne(code);
 		return student;
 		
 	}
@@ -69,6 +99,7 @@ public class MainController {
 	public ModelAndView insert() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("student",new Student());
+		mav.addObject("count",studentDao.findAll().size());
 		mav.setViewName("form");
 		return mav; 
 	}
@@ -87,7 +118,7 @@ public class MainController {
 		List<Student> students = null;
 		log.info(s.getcStudent()+"");
 		try {
-			if(s.getcStudent() == 1) {
+			if(s.getcStudent() == null) {
 				log.info("Agrego un nuevo usuario. Codigo:");
 				//Agrego el nuevo usuario, el 1 representa que es una nueva instancia
 				studentDao.save(s, 1);	
@@ -112,9 +143,9 @@ public class MainController {
 	public ModelAndView searchBy(@RequestParam(value = "name") String name,@RequestParam(value="age") Integer age) {
 		ModelAndView mav = new ModelAndView();
 		//Busco por nombre
-		List<Student> studentsNameList = studentRepo.findBySName(name);
+		List<Student> studentsNameList = sService.findBySName(name);
 		//Busco por edad
-		List<Student> studentsAgeList = studentRepo.findBySAge(age);
+		List<Student> studentsAgeList = sService.findBySAge(age);
 		mav.addObject("studentsname",studentsNameList);
 		mav.addObject("studentsage",studentsAgeList);
 		mav.setViewName("find");
